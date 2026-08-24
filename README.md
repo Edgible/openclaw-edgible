@@ -1,8 +1,8 @@
 # openclaw-edgible
 
-OpenClaw skill for the [Edgible](https://edgible.com) CLI: list, create, and delete apps. One skill, named **`edgible`**, same idea as OpenClaw’s bundled `github` skill.
+OpenClaw skill for the [Edgible](https://edgible.com) CLI. One skill, named **`edgible`**, same idea as OpenClaw’s bundled `github` skill: the model runs `edgible` with your args. Python helpers exist only for **app list / create-existing / delete** (this-device filter, cert wait, 18789 auth).
 
-Chat: `/skill edgible` then “list my apps”, “publish port 8082 as skill-test”, “delete skill-test”.
+Chat: `/skill edgible --version`, `/skill edgible device list`, `/skill edgible list my apps`, `/skill edgible create …`.
 
 Requires `edgible` on PATH and `edgible auth login` on the Gateway host. This repo is not Edgible signup.
 
@@ -33,9 +33,11 @@ If you previously copied `edgible-app-create` / `edgible-app-list` / `edgible-ap
 ## Layout
 
 ```text
-SKILL.md              ← index: dispatch list / create / delete
-scripts/              ← deterministic helpers (python3 + edgible)
-references/           ← create fields, Control UI aftercare, safety
+SKILL.md              ← pass-through to `edgible` + the three helpers
+scripts/              ← list.py / create.py / delete.py only
+references/cli.md     ← full CLI catalog
+references/create.md  ← publish a local port
+references/safety.md
 ```
 
 The agent loads `name` + `description` always, `SKILL.md` when this skill is used, and `references/` only if it opens them.
@@ -61,6 +63,8 @@ Port **18789** with `--auth-modes none` is rejected. Existing app name → repri
 A local process must already listen (this skill does not start Docker). Then in Control UI:
 
 ```text
+/skill edgible --version
+/skill edgible device list --type serving
 /skill edgible List Edgible apps on this machine.
 /skill edgible Create a public Edgible app named skill-test for nginx on port 8082. If it already exists, just give me the URL.
 /skill edgible Delete the Edgible app named skill-test.

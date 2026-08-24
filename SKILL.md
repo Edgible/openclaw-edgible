@@ -1,7 +1,7 @@
 ---
 name: edgible
 description: "Edgible CLI pass-through on this machine. /skill edgible <args> means run `edgible <args>` (whoami, doctor, --version, device, app, agent, …). Do not list apps unless they asked what is published. Python helpers only for app list/create-existing/delete."
-version: 0.3.2
+version: 0.3.3
 metadata:
   openclaw:
     requires:
@@ -16,7 +16,7 @@ metadata:
 
 OpenClaw talks to this computer. Edgible is the door. Stop if `edgible` is missing. Do not install Edgible, create an org, or register a device unless they clearly asked.
 
-`{baseDir}` is already an **absolute** directory. Never `~` in exec. **Never set exec `workdir`.**
+`{baseDir}` is the folder that contains **this** `SKILL.md` — usually `$HOME/.openclaw/workspace/skills/edgible` or `$HOME/.openclaw/skills/edgible`. It is **not** `$HOME/.openclaw/workspace`. Never `~` in exec. **Never set exec `workdir`.** Do not `read` the `.py` files; `exec` them.
 
 Full command list: `{baseDir}/references/cli.md`. Safety: `{baseDir}/references/safety.md`. Create fields: `{baseDir}/references/create.md`.
 
@@ -50,7 +50,7 @@ edgible --help
 
 ## Helpers (only these three)
 
-Use `{baseDir}/scripts/…` **only** for English app list/create/delete. Never for `whoami`, `doctor`, `--version`, or any other CLI verb.
+Use the skill’s `scripts/` folder **only** for English app list/create/delete. Never for `whoami`, `doctor`, `--version`, or any other CLI verb. **Wrong:** `$HOME/.openclaw/workspace/scripts/delete.py` (that path does not exist). **Right:** `{baseDir}/scripts/delete.py`.
 
 | They said | Exec |
 | --- | --- |
@@ -64,6 +64,13 @@ Use `{baseDir}/scripts/…` **only** for English app list/create/delete. Never f
 python3 -u {baseDir}/scripts/list.py
 python3 -u {baseDir}/scripts/create.py --name <name> --port <port> --auth-modes <none|org|api-key>
 python3 -u {baseDir}/scripts/delete.py --name <name>
+```
+
+If `{baseDir}` was expanded to the workspace root (no `skills/edgible` in the path), use one of these instead (expand `$HOME`; still no `~`, still no `workdir`):
+
+```bash
+python3 -u $HOME/.openclaw/workspace/skills/edgible/scripts/delete.py --name <name>
+python3 -u $HOME/.openclaw/skills/edgible/scripts/delete.py --name <name>
 ```
 
 If a helper asks for `--device-name`, retry with **this** machine from that error, not another box. Never `--auth-modes none` on port **18789**.

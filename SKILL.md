@@ -1,7 +1,7 @@
 ---
 name: edgible
 description: "Edgible CLI for public https URLs on this machine: list apps (this serving device by default), create/publish a local port, delete/unpublish. Use when the user wants what is published, an Edgible URL, or to take one down."
-version: 0.2.0
+version: 0.2.1
 metadata:
   openclaw:
     requires:
@@ -16,7 +16,19 @@ metadata:
 
 OpenClaw talks to this computer. Edgible is the door: `https://<app>.<org>.edgible.com` for a **local TCP port that is already listening**. Do not install Edgible, create an org, or register a device. Stop if `edgible` is missing or not logged in.
 
-Helpers live next to this file. Prefer `{baseDir}/scripts/…`. If that path is missing, try `$HOME/.openclaw/workspace/skills/edgible/scripts/…`.
+Helpers live next to this file. `{baseDir}` is already an **absolute** directory. Use it in the command. Never `~`.
+
+## How to exec
+
+Omit `workdir` on the exec tool. OpenClaw treats workdir as a literal path and does **not** expand `~` or `$HOME`. Setting `workdir` to `~/.openclaw/workspace/skills/edgible/scripts` fails.
+
+Run one command with the full script path. Do not `cd`. Do not pass `workdir`.
+
+```bash
+python3 -u {baseDir}/scripts/list.py
+```
+
+If `{baseDir}` is unset, use `/home/<user>/.openclaw/workspace/skills/edgible/scripts/list.py` (real home, no tilde). Still omit `workdir`.
 
 ## WhatsApp noise
 
@@ -72,12 +84,14 @@ python3 -u "{baseDir}/scripts/delete.py" --name <name>
 
 ## Hard rules
 
+- **Never set exec `workdir`.** Never use `~` in the exec command or workdir.
 - Default list is this device, not `--all`.
 - Do not port-forward. Do not bind OpenClaw Gateway to `0.0.0.0`.
 - Do not paste tokens, API keys, or WhatsApp session files.
 - Do not publish through Edgible: WhatsApp, Telegram, Discord, or Ollama.
 - Do not set OpenClaw `gateway.auth` to none.
 - If exec needs approval, say so. If a helper fails, show stderr. Do not “fix” 18789 by switching to `none`.
+- If exec errors that workdir `~` is unavailable, retry the same command **with no workdir** and `{baseDir}/scripts/…`.
 
 ## Not this skill
 

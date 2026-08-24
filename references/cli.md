@@ -8,6 +8,7 @@ If the user passed CLI-shaped text after `/skill edgible`, run `edgible` with th
 
 | Command | Notes |
 | --- | --- |
+| `edgible whoami` | Active session: Profile, Environment, Account, Organization. `/skill edgible whoami` must run this, not app list. |
 | `edgible --version` | CLI version on PATH |
 | `edgible --help` | Groups |
 | `edgible --plain` | No color (good for chat) |
@@ -44,11 +45,12 @@ If the user passed CLI-shaped text after `/skill edgible`, run `edgible` with th
 
 | Command | Skill |
 | --- | --- |
+| `whoami` (top-level) | Session: profile, environment, account, org |
 | `auth login` | Interactive / passwords — **do not run in chat** |
 | `auth logout` | Confirm first |
 | `auth select-org` | Interactive — do not run |
 
-No `whoami`. Closest safe peek: `edgible config get email` (not `config list`).
+Never dump `config list` (can contain `devicePassword`).
 
 ## `agent` (local daemon)
 

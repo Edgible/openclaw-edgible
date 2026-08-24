@@ -1,7 +1,7 @@
 ---
 name: edgible
-description: "Edgible CLI on this machine. Use for public https URLs (list/create/delete apps on this serving device), --version, device health, agent status, app get/events, and any other edgible subcommand the user names. Prefer running `edgible` with their args; use the python helpers only for app list/create-existing/delete."
-version: 0.3.0
+description: "Edgible CLI on this machine. Use for whoami/session/account/org, --version, public https URLs (list/create/delete apps on this serving device), device health, agent status, and any other edgible subcommand the user names. Prefer running `edgible` with their args. whoami is `edgible whoami`, not app list. Use python helpers only for app list/create-existing/delete."
+version: 0.3.1
 metadata:
   openclaw:
     requires:
@@ -25,6 +25,7 @@ Full command list: `{baseDir}/references/cli.md`. Safety: `{baseDir}/references/
 Default: run the **edgible CLI** with the user’s words as argv. Same idea as `/skill edgible --version` → `edgible --version`.
 
 ```bash
+edgible whoami
 edgible --version
 edgible device list --type serving --json
 edgible app get --app-id <id> --json
@@ -32,10 +33,10 @@ edgible --help
 edgible app --help
 ```
 
-- If the remainder looks like CLI args (`--version`, `device health`, `app events`, `agent status`), run `edgible` plus those args. First tool call is `exec`. Do not ask again.
+- If the remainder looks like CLI args (`whoami`, `--version`, `device health`, `app events`, `agent status`), run `edgible` plus those args. First tool call is `exec`. Do not ask again.
+- **`whoami` / who am I / what account / which org / active session** → `edgible whoami` (add `--plain` if the output is colored). Paste Profile, Environment, Account, Organization. This is **not** app list. Do not run `list.py`.
 - Add `--json` when the command supports it and they want a list/status. Add `--non-interactive` on mutating commands **after** they confirmed (see below).
-- There is **no** `edgible whoami`. If they said whoami, run `edgible --help` or `edgible config get email` (never dump `config list` — it can contain passwords).
-- If unsure which subcommand, `edgible --help` or `edgible <group> --help`. Do not invent verbs.
+- If unsure which subcommand, `edgible --help` or `edgible <group> --help`. Do not invent verbs. Do **not** default unknown text to `list.py`.
 - Interactive TTY does not work in chat: no `edgible app ssh` without `--command`, no `agent logs -f`, no interactive `auth login` / `auth select-org`.
 
 ## Helpers (only these three)
@@ -44,6 +45,7 @@ Use `{baseDir}/scripts/…` instead of raw `edgible app …` when:
 
 | They said | Helper |
 | --- | --- |
+| whoami / account / org / session | **not a helper** — `edgible whoami` |
 | what’s published / URLs / apps on **this** machine | `list.py` (not whole org) |
 | whole org / every device | `list.py --all` |
 | publish / create a URL for a **local listening port** | `create.py` (`app create existing`) |

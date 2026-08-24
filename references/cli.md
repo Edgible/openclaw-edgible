@@ -2,13 +2,14 @@
 
 `edgible` / `edgible --help`. Alias: `app` = `application`, `dev` = `device`, `gw` = `gateway`.
 
-If the user passed CLI-shaped text after `/skill edgible`, run `edgible` with those args. Prefer `--json` on list/get/status. Prefer `--non-interactive` on mutating commands **after** confirmation. Do not invent subcommands.
+If the user passed CLI-shaped text after `/skill edgible` (`whoami`, `doctor`, `--version`, `device list`, …), run `edgible` with those args **verbatim**. Never treat that token as an application name. Never fall back to `list.py`.
 
 ## Global
 
 | Command | Notes |
 | --- | --- |
-| `edgible whoami` | Active session: Profile, Environment, Account, Organization. `/skill edgible whoami` must run this, not app list. |
+| `edgible whoami` | Active session: Profile, Environment, Account, Organization |
+| `edgible doctor` | Diagnostics. `/skill edgible doctor` must run this, not app list |
 | `edgible --version` | CLI version on PATH |
 | `edgible --help` | Groups |
 | `edgible --plain` | No color (good for chat) |

@@ -1,7 +1,7 @@
 ---
 name: edgible
-description: "Edgible CLI on this machine. Use for whoami/session/account/org, --version, public https URLs (list/create/delete apps on this serving device), device health, agent status, and any other edgible subcommand the user names. Prefer running `edgible` with their args. whoami is `edgible whoami`, not app list. Use python helpers only for app list/create-existing/delete."
-version: 0.3.1
+description: "Edgible CLI pass-through on this machine. /skill edgible <args> means run `edgible <args>` (whoami, doctor, --version, device, app, agent, …). Do not list apps unless they asked what is published. Python helpers only for app list/create-existing/delete."
+version: 0.3.2
 metadata:
   openclaw:
     requires:
@@ -22,30 +22,39 @@ Full command list: `{baseDir}/references/cli.md`. Safety: `{baseDir}/references/
 
 ## How to exec
 
-Default: run the **edgible CLI** with the user’s words as argv. Same idea as `/skill edgible --version` → `edgible --version`.
+**Pass-through first.** `/skill edgible` plus a CLI token means run that CLI. Copy the remainder **verbatim**. Do not correct spelling into an app name (`doctor` is not `dcotr`, not an app to list).
 
 ```bash
 edgible whoami
+edgible doctor
 edgible --version
 edgible device list --type serving --json
 edgible app get --app-id <id> --json
 edgible --help
-edgible app --help
 ```
 
-- If the remainder looks like CLI args (`whoami`, `--version`, `device health`, `app events`, `agent status`), run `edgible` plus those args. First tool call is `exec`. Do not ask again.
-- **`whoami` / who am I / what account / which org / active session** → `edgible whoami` (add `--plain` if the output is colored). Paste Profile, Environment, Account, Organization. This is **not** app list. Do not run `list.py`.
-- Add `--json` when the command supports it and they want a list/status. Add `--non-interactive` on mutating commands **after** they confirmed (see below).
-- If unsure which subcommand, `edgible --help` or `edgible <group> --help`. Do not invent verbs. Do **not** default unknown text to `list.py`.
-- Interactive TTY does not work in chat: no `edgible app ssh` without `--command`, no `agent logs -f`, no interactive `auth login` / `auth select-org`.
+| Remainder | Exec |
+| --- | --- |
+| `whoami`, `doctor`, `--version`, `device …`, `app …`, `agent …`, `auth …`, `stack …`, `gateway …`, `discover …`, `config …`, `ai …`, `connectivity …`, or any other first token | `edgible` + **exact** remainder. Not `list.py`. |
+| English: what’s published / my URLs / apps on this box (no CLI verb) | `list.py` |
+| English: publish this port | `create.py` |
+| English: take down that app URL | `delete.py` |
+| Unknown English, no CLI verb | `edgible --help` — still not `list.py` |
+
+- First tool call is `exec`. Do not ask again when the remainder is already a CLI command.
+- `whoami` → paste Profile / Environment / Account / Organization.
+- `doctor` → paste the doctor report. It is a real top-level command, not app list.
+- `--plain` if the CLI output is colored. `--json` only when that command supports it and they want machine output.
+- `--non-interactive` on mutating commands **after** they confirmed.
+- No interactive TTY: no `app ssh` without `--command`, no `agent logs -f`, no `auth login` / `auth select-org`.
 
 ## Helpers (only these three)
 
-Use `{baseDir}/scripts/…` instead of raw `edgible app …` when:
+Use `{baseDir}/scripts/…` **only** for English app list/create/delete. Never for `whoami`, `doctor`, `--version`, or any other CLI verb.
 
-| They said | Helper |
+| They said | Exec |
 | --- | --- |
-| whoami / account / org / session | **not a helper** — `edgible whoami` |
+| `whoami` / `doctor` / other CLI verb | `edgible` + exact args |
 | what’s published / URLs / apps on **this** machine | `list.py` (not whole org) |
 | whole org / every device | `list.py --all` |
 | publish / create a URL for a **local listening port** | `create.py` (`app create existing`) |

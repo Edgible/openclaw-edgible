@@ -6,6 +6,8 @@ Chat: `/skill edgible --version`, `/skill edgible device list`, `/skill edgible 
 
 Requires `edgible` on PATH and `edgible auth login` on the Gateway host. This repo is not Edgible signup.
 
+**Guides** (tutorials, not this skill): [Edgible_UX](https://github.com/Edgible/Edgible_UX) — [OpenClaw on Edgible](https://github.com/Edgible/Edgible_UX/blob/main/guides/openclaw-on-edgible/01-invite-through-edgible-on-vm.md), [Telegram pocket client](https://github.com/Edgible/Edgible_UX/blob/main/guides/openclaw-on-edgible/02-telegram-pocket-client.md).
+
 ## Install
 
 `SKILL.md` is at the repo root (ClawHub / `git:` install expect that).

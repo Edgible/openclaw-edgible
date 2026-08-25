@@ -6,7 +6,7 @@ Chat: `/skill edgible --version`, `/skill edgible device list`, `/skill edgible 
 
 Requires `edgible` on PATH and `edgible auth login` on the Gateway host. This repo is not Edgible signup.
 
-**Guides** (tutorials, not this skill): [Edgible_UX chapter index](https://github.com/Edgible/Edgible_UX/blob/main/guides/openclaw-on-edgible/README.md) — [1. Edgible on an Ubuntu VM](https://github.com/Edgible/Edgible_UX/blob/main/guides/openclaw-on-edgible/01-edgible-on-vm.md), [5. OpenClaw skill for the Edgible CLI](https://github.com/Edgible/Edgible_UX/blob/main/guides/openclaw-on-edgible/05-edgible-openclaw-skill.md), [6. Telegram pocket client for OpenClaw](https://github.com/Edgible/Edgible_UX/blob/main/guides/openclaw-on-edgible/06-telegram-pocket-client.md).
+**Guides** (tutorials, not this skill): [Edgible_UX chapter index](https://github.com/Edgible/Edgible_UX/blob/main/guides/openclaw-on-edgible/README.md) — [1. Edgible on an Ubuntu VM](https://github.com/Edgible/Edgible_UX/blob/main/guides/openclaw-on-edgible/01-edgible-on-vm.md), [5. OpenClaw skill for the Edgible CLI](https://github.com/Edgible/Edgible_UX/blob/main/guides/openclaw-on-edgible/05-edgible-openclaw-skill.md), [6. Telegram pocket client for OpenClaw](https://github.com/Edgible/Edgible_UX/blob/main/guides/openclaw-on-edgible/06-telegram-pocket-client.md), [9. Models beyond free Gemini](https://github.com/Edgible/Edgible_UX/blob/main/guides/openclaw-on-edgible/09-models-beyond-free-gemini.md).
 
 ## Install
 
